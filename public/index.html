@@ -60,19 +60,13 @@
   <!-- Page-specific (main) content here -->
   <main class="container">
     <section class="new-tweet">
-      <form id="tweet-form" class="tweet-form" action="/tweets/" method="POST">
+      <form id="tweet-form" class="tweet-form" action="/tweets" method="POST">
         <textarea class="tweet-input" name="text" placeholder="What are you humming about?" rows="1" spellcheck="false" id="tweet_input"></textarea>
         <div class="tweet-bottom">
           <button type="submit" class="tweet-submit">Tweet</button>
           <output name="counter" class="tweet-text" for="tweet-text" id="char_count">140</output>
         </div>
       </form>
-      <script>
-        $('#tweet_form').submit(function(event) {
-          event.preventDefault();
-          $.post("index.js", $(this).serialize());
-        });
-      </script>
     </section>
     <section id="tweets-box" class="tweets-box">
     </section>

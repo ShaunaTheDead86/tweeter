@@ -58,4 +58,38 @@ const renderTweets = function(arrObj) {
   }
 };
 
+const loadTweets = function() {
+
+  $.ajax('/tweets', { method: GET })
+    .then(function(res) {
+      console.log(res);
+      renderTweets(res)
+    })
+};
+
+$("#tweet-form").submit(function(e) {
+  $.ajax({
+    type: "POST",
+    url: '/tweets',
+    data: $(this).serialize(),
+    success: function(data) {
+      console.log(this.data);
+      const newTweet = [{
+        "user": {
+          "name": "Shauna",
+          "avatars": "/images/girl.png",
+          "handle": "@ShaunaTheDead"
+        },
+        "content": {
+          "text": this.data.split('=')[1]
+        },
+        "created_at": new Date
+      }];
+
+      renderTweets(newTweet);
+    }
+  });
+  e.preventDefault();
+});
+
 renderTweets(tweetData);
