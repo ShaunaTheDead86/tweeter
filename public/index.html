@@ -6,25 +6,25 @@
   <title>Tweeter - Home Page</title>
 
   <!-- External CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
-    type="text/css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" type="text/css" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Bungee&family=Source+Sans+Pro:ital,wght@0,300;0,600;1,300;1,600&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Source+Sans+Pro:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
 
   <!-- App CSS -->
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
   <link rel="stylesheet" href="/styles/nav.css" type="text/css" />
   <link rel="stylesheet" href="/styles/header.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/new-tweet.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/tweets.css" type="text/css" />
 
   <!-- External JS -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
   <!-- App JS -->
   <script type="text/javascript" src="/scripts/client.js"></script>
+  <script type="text/javascript" src="/scripts/composer-char-counter.js"></script>
   <script src="https://kit.fontawesome.com/cb3d05039b.js" crossorigin="anonymous"></script>
 </head>
 
@@ -55,7 +55,126 @@
 
   <!-- Page-specific (main) content here -->
   <main class="container">
-
+    <section class="new-tweet">
+      <form class="tweet-form" action="/tweets/" method="POST">
+        <textarea class="tweet-input" name="text" placeholder="What are you humming about?" rows="1" spellcheck="false" id="tweet_input"></textarea>
+        <div class="tweet-bottom">
+          <button type="submit" class="tweet-submit">Tweet</button>
+          <output name="counter" class="tweet-text" for="tweet-text" id="char_count">140</output>
+        </div>
+      </form>
+    </section>
+    <section class="tweets-box">
+      <article class="tweet">
+        <div class="tweet-header">
+          <div class="tweet-header profile-display">
+            <img src="/images/girl.png" class="profile-image"></img>
+            <h3 class="profile-name">Shauna</h3>
+          </div>
+          <div class="tweet-header tweeter-handle">
+            <h3>@ShaunaTheDead</h3>
+          </div>
+        </div>
+        <div class="tweet-box">
+          <h3 class="tweet-text">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </h3>
+        </div>
+        <div class="tweet-footer">
+          <div class="tweet-timestamp">
+            <h5>1 day ago</h5>
+          </div>
+          <div class="tweet-icons-box">
+            <i class="fas fa-flag tweet-icons"></i>
+            <i class="fas fa-retweet tweet-icons"></i>
+            <i class="fas fa-heart tweet-icons"></i>
+          </div>
+        </div>
+      </article>
+      <article class="tweet">
+        <div class="tweet-header">
+          <div class="tweet-header profile-display">
+            <img src="/images/girl.png" class="profile-image"></img>
+            <h3 class="profile-name">Shauna</h3>
+          </div>
+          <div class="tweet-header tweeter-handle">
+            <h3>@ShaunaTheDead</h3>
+          </div>
+        </div>
+        <div class="tweet-box">
+          <h3 class="tweet-text">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </h3>
+        </div>
+        <div class="tweet-footer">
+          <div class="tweet-timestamp">
+            <h5>1 day ago</h5>
+          </div>
+          <div class="tweet-icons-box">
+            <i class="fas fa-flag tweet-icons"></i>
+            <i class="fas fa-retweet tweet-icons"></i>
+            <i class="fas fa-heart tweet-icons"></i>
+          </div>
+        </div>
+      </article>
+      <article class="tweet">
+        <div class="tweet-header">
+          <div class="tweet-header profile-display">
+            <img src="/images/girl.png" class="profile-image"></img>
+            <h3 class="profile-name">Shauna</h3>
+          </div>
+          <div class="tweet-header tweeter-handle">
+            <h3>@ShaunaTheDead</h3>
+          </div>
+        </div>
+        <div class="tweet-box">
+          <h3 class="tweet-text">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </h3>
+        </div>
+        <div class="tweet-footer">
+          <div class="tweet-timestamp">
+            <h5>1 day ago</h5>
+          </div>
+          <div class="tweet-icons-box">
+            <i class="fas fa-flag tweet-icons"></i>
+            <i class="fas fa-retweet tweet-icons"></i>
+            <i class="fas fa-heart tweet-icons"></i>
+          </div>
+        </div>
+      </article>
+      <article class="tweet">
+        <div class="tweet-header">
+          <div class="tweet-header profile-display">
+            <img src="/images/girl.png" class="profile-image"></img>
+            <h3 class="profile-name">Shauna</h3>
+          </div>
+          <div class="tweet-header tweeter-handle">
+            <h3>@ShaunaTheDead</h3>
+          </div>
+        </div>
+        <div class="tweet-box">
+          <h3 class="tweet-text">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </h3>
+        </div>
+        <div class="tweet-footer">
+          <div class="tweet-timestamp">
+            <h5>1 day ago</h5>
+          </div>
+          <div class="tweet-icons-box">
+            <i class="fas fa-flag tweet-icons"></i>
+            <i class="fas fa-retweet tweet-icons"></i>
+            <i class="fas fa-heart tweet-icons"></i>
+          </div>
+        </div>
+      </article>
+    </section>
+    <!-- 
+  A container element that contains the tweets
+  The styling of the tweet, as shown in the first screenshot below
+  The hover state of the tweet where the stylistic changes occur (as mentioned in the second screenshot below)
+  The time that has passed since the tweet was created (e.g. 10 days ago) -->
   </main>
 </body>
 
