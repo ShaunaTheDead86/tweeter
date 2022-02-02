@@ -9,7 +9,7 @@
   flex-direction: column;
 }
 
-.tweet {
+.tweets-container {
   border: 5px solid;
   height: fit-content;
   width: 100%;
@@ -19,7 +19,7 @@
   margin-bottom: 20px;
 }
 
-.tweet:hover {
+.tweets-container:hover {
   box-shadow: 5px 5px #4e4e4e50;
 }
 
@@ -98,5 +98,3 @@
 .tweet-icons:hover {
   color: #ffa013;
 }
-
-.user-name {}
