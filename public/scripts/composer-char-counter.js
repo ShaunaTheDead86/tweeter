@@ -29,7 +29,7 @@ $(document).ready(function() {
 
     if (char_count < 0) {
       $('#char_count').css('color', 'red');
-      $('.tweet-submit').disabled = true;
+      $('tweet-form').submit(false);
       renderError('You\'ve gone over the character limit! Please remove some characters!');
     }
   });

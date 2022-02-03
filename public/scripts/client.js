@@ -69,13 +69,11 @@ const loadTweets = function() {
 $("#tweet-form").submit(function(e) {
   e.preventDefault();
 
-  var form = $("#tweet-form");
-  $.ajax({
-    type: "POST",
-    url: '/tweets',
-    data: form.serialize(),
-    success: function(data) {
-      const text = decodeURIComponent(this.data.slice(5));
+  if (!(140 - $('#tweet_input').val().length < 0)) {
+    const data = decodeURIComponent($(this).serialize());
+
+    $.post('/tweets', data, function() {
+      const text = data.split('=')[1];
 
       let newTweet = {
         "user": {
@@ -92,11 +90,8 @@ $("#tweet-form").submit(function(e) {
       tweetData.unshift(newTweet);
       $('#tweets-box').empty();
       renderTweets(tweetData);
-    },
-    error: function(data) {
-      alert("some Error");
-    }
-  });
+    });
+  }
 });
 
 renderTweets(tweetData);
