@@ -40,7 +40,7 @@ const createTweetElement = function(obj) {
     </div>
     <div class="tweet-footer">
     <div class="tweet-timestamp">
-    <h5 class="render" datetime"${obj['created_at']}"></h5>
+    <h5 class="render" datetime"${timeago.format(obj['created_at'])}">${timeago.format(obj['created_at'])}</h5>
     </div>
     <div class="tweet-icons-box">
     <i class="fas fa-flag tweet-icons"></i>
@@ -62,34 +62,41 @@ const loadTweets = function() {
 
   $.ajax('/tweets', { method: GET })
     .then(function(res) {
-      console.log(res);
       renderTweets(res)
     })
 };
 
 $("#tweet-form").submit(function(e) {
+  e.preventDefault();
+
+  var form = $("#tweet-form");
   $.ajax({
     type: "POST",
     url: '/tweets',
-    data: $(this).serialize(),
+    data: form.serialize(),
     success: function(data) {
-      console.log(this.data);
-      const newTweet = [{
+      const text = decodeURIComponent(this.data.slice(5));
+
+      let newTweet = {
         "user": {
           "name": "Shauna",
           "avatars": "/images/girl.png",
           "handle": "@ShaunaTheDead"
         },
         "content": {
-          "text": this.data.split('=')[1]
+          "text": text
         },
         "created_at": new Date
-      }];
+      };
 
-      renderTweets(newTweet);
+      tweetData.unshift(newTweet);
+      $('#tweets-box').empty();
+      renderTweets(tweetData);
+    },
+    error: function(data) {
+      alert("some Error");
     }
   });
-  e.preventDefault();
 });
 
 renderTweets(tweetData);
