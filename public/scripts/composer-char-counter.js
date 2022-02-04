@@ -1,22 +1,26 @@
 const renderError = function(error) {
-  $('.error-box').empty();
-  $('.error-box').css('visibility', 'visible');
-  $('.error-box').slideDown(4000, function() {
-    $('.error-box').css('border', '5px solid red');
-    $('.error-box').html(error);
+  $('.new-tweet-header').empty();
+  $('.new-tweet-header').css('visibility', 'visible');
+  $('.new-tweet-header').slideDown(5000, function() {
+    $('.new-tweet-header').css('border', '5px solid red');
+    $('.new-tweet-header').html(error);
   });
   return;
 };
 
 $(document).ready(function() {
   // set default values on load
-  $('.error-box').css('visibility', 'hidden');
+  $('.new-tweet-header').css('visibility', 'hidden');
   $('#tweet_input').val('');
   $('char_count').text('140');
 
   let textareaLength = $('#tweet_input').val().length;
 
   $('#tweet_input').on('input', function() {
+    $('.new-tweet').css("height", "fit-content");
+
+    console.log($('#tweet_input').val.length);
+
     textareaLength = $('#tweet_input').val().length;
     char_count = 140 - textareaLength;
 
@@ -24,13 +28,13 @@ $(document).ready(function() {
     $('#char_count').text(`${char_count}`);
 
     if (char_count >= 0) {
-      $('.error-box').css('visibility', 'hidden');
+      $('.new-tweet-header').css('visibility', 'hidden');
     }
 
     if (char_count < 0) {
       $('#char_count').css('color', 'red');
       $('tweet-form').submit(false);
-      renderError('You\'ve gone over the character limit! Please remove some characters!');
+      renderError('Over character limit!');
     }
   });
 });

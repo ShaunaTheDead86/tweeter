@@ -15,10 +15,6 @@
 
   <!-- App CSS -->
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-  <link rel="stylesheet" href="/styles/nav.css" type="text/css" />
-  <link rel="stylesheet" href="/styles/header.css" type="text/css" />
-  <link rel="stylesheet" href="/styles/new-tweet.css" type="text/css" />
-  <link rel="stylesheet" href="/styles/tweets.css" type="text/css" />
 
   <!-- External JS -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -32,46 +28,53 @@
 </head>
 
 <body>
-  <!-- Top nav bar (fixed) -->
-  <nav>
-    <div class="nav-title">tweeter</div>
-    <div class="nav-text">
-      <center>
-        <h2>
-          <b>Write</b> a new tweet<br>
-          <i class="fas fa-angle-double-down" style="color:#FF0000"></i>
-        </h2>
-      </center>
-    </div>
-  </nav>
+  <section class="container">
 
-  <header>
-    <div>
-      <img src="/images/profile-hex.png">
-    </div>
-    <div>
-      <h2 class="header-h2">
-        <b class="header-b">Shauna</b> Empringham
+    <nav class="navbar">
+      <h2 class="nav-title">
+        tweeter
       </h2>
-    </div>
-  </header>
+      <h2 class="nav-text">
+        <b>Write</b> a new tweet<br>
+        <i class="fas fa-angle-double-down" style="color:#FF0000"></i>
+      </h2>
+    </nav>
 
-  <!-- Page-specific (main) content here -->
-  <main class="container">
-    <section class="new-tweet">
-      <div class="error-box">
+    <section class="main-container">
+      <header class="header">
+        <img src="/images/profile-hex.png">
+        <h2 class="header-h2">
+          <b>Shauna</b> Empringham
+        </h2>
+      </header>
+
+      <div class="main">
+        <article class="new-tweet">
+          <div class="new-tweet-header">
+
+          </div>
+
+          <form id="tweet-form" class="tweet-form" action="/tweets" method="POST">
+            <textarea class="new-tweet-text" name="text" placeholder="What are you humming about?" rows="1" spellcheck="false" id="tweet_input"></textarea>
+
+            <div class="new-tweet-footer">
+              <button type="submit" class="new-tweet-footer tweet-submit">Tweet</button>
+              <output name="counter" class="tweet-charcounter" for="tweet-text" id="char_count">140</output>
+            </div>
+          </form>
+        </article>
+
+        <article class="tweets" id="tweets">
+
+        </article>
       </div>
-      <form id="tweet-form" class="tweet-form" action="/tweets" method="POST">
-        <textarea class="tweet-input" name="text" placeholder="What are you humming about?" rows="1" spellcheck="false" id="tweet_input"></textarea>
-        <div class="tweet-bottom">
-          <button type="submit" class="tweet-submit">Tweet</button>
-          <output name="counter" class="tweet-text" for="tweet-text" id="char_count">140</output>
-        </div>
-      </form>
     </section>
-    <section id="tweets-box" class="tweets-box">
-    </section>
-  </main>
+
+    <article class="footer">
+      <h2 class="footer-text">Back to the top</h2>
+    </article>
+
+  </section>
 </body>
 
 </html>

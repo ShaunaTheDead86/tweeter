@@ -23,15 +23,13 @@ const tweetData = [{
 ];
 
 const createTweetElement = function(obj) {
-  return `<article class="tweets-container">
+  return `<div class="tweets-container">
     <div class="tweet-header">
-    <div class="tweet-header profile-display">
-    <img src="${obj.user.avatars}" class="profile-image"></img>
-    <h3 class="profile-name">${obj.user.name}</h3>
-    </div>
-    <div class="tweet-header tweeter-handle">
-    <h3>${obj.user.handle}</h3>
-    </div>
+      <div class="profile-name-avatar">
+        <img src="${obj.user.avatars}" class="profile-image"></img>
+        <h3 class="profile-name">${obj.user.name}</h3>
+      </div>
+      <h3 class="tweeter-handle">${obj.user.handle}</h3>
     </div>
     <div class="tweet-box">
     <h3 class="tweet-text">
@@ -48,13 +46,13 @@ const createTweetElement = function(obj) {
     <i class="fas fa-heart tweet-icons"></i>
     </div>
     </div>
-    </article>`;
+    </div>`;
 };
 
 const renderTweets = function(arrObj) {
   for (const obj of arrObj) {
     let $tweet = createTweetElement(obj);
-    $('#tweets-box').append($tweet);
+    $('#tweets').append($tweet);
   }
 };
 
@@ -88,10 +86,38 @@ $("#tweet-form").submit(function(e) {
       };
 
       tweetData.unshift(newTweet);
-      $('#tweets-box').empty();
+      $('#tweets').empty();
       renderTweets(tweetData);
     });
   }
 });
+
+$(document).ready(function() {
+  let newTweetOpen = false;
+  const newTweetHeight = $('.new-tweet').css("height");
+  $('.new-tweet').css({ "height": "0", "padding": "0", "border-width": "0", "margin-bottom": "0" });
+
+  $('.nav-text').click(function() {
+    if (newTweetOpen === false) {
+      $('.new-tweet').animate({ "height": newTweetHeight, "padding": "1rem", "border-width": "3px", "margin-bottom": "1rem" });
+      newTweetOpen = true;
+    } else {
+      $('.new-tweet').animate({ "height": "0", "padding": "0", "border-width": "0px", "margin-bottom": "0" });
+      newTweetOpen = false;
+    }
+  });
+});
+
+$(document).scroll(function() {
+  if ($(document).scrollTop() !== 0) {
+    $('.footer').css("visibility", "visible");
+  } else {
+    $('.footer').css("visibility", "hidden");
+  }
+});
+
+$('.footer').click(function() {
+  $(window).scrollTop(0);
+})
 
 renderTweets(tweetData);
