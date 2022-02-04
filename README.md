@@ -2,7 +2,15 @@
 
 Tweeter is a simple, single-page Twitter clone.
 
-This repository is the starter code for the project: Students will fork and clone this repository, then build upon it to practice their HTML, CSS, JS, jQuery and AJAX front-end skills, and their Node, Express back-end skills.
+Tweeter is meant to display my ability to use HTML Markup and CSS Stylesheets for web styling, and integrate Javascript and JQuery for web functionality.
+
+[Tweeter has a fixed navigation bar and a simple "back to the top" button that appears after scrolling](back_to_top.gif)
+
+[Tweeter has a drop down menu from the navigation bar that adds an area to write new tweets to the main page](new_tweet_preview.gif)
+
+[Tweeter instantly displays your tweet at the top of the feed after posting](post_new_tweet.gif)
+
+[Tweeter is also resizeable making it accessible from desktop, tablet, or mobile!](tweeter_resize.gif)
 
 ## Getting Started
 
