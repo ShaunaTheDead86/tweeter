@@ -11,7 +11,7 @@ article.tweet {
   margin-bottom: 1rem;
 }
 
-article.tweet-container:hover {
+article.tweet:hover {
   box-shadow: 0.5rem 0.5rem #58544c55;
 }
 

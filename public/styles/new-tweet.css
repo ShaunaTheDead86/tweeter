@@ -5,14 +5,19 @@ section.new-tweet-section {
   margin-top: 1rem;
   margin-bottom: 1rem;
   width: 100%;
-  height: fit-content;
+  height: 0px;
+}
+
+section.new-tweet-section:hover {
+  box-shadow: 0.5rem 0.5rem #58544c55;
 }
 
 section.new-tweet-section-hidden {
   border-width: 0rem;
   padding: 0rem;
   margin: 0rem;
-  height: 0rem;
+  margin-top: 0rem;
+  height: 0px;
   visibility: hidden;
 }
 
@@ -20,6 +25,8 @@ form.new-tweet {
   width: 100%;
   height: fit-content;
 }
+
+form.new-tweet:hover {}
 
 div.error-message {
   display: flex;

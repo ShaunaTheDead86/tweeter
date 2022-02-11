@@ -116,7 +116,17 @@ $(document).ready(function() {
   });
 
   $("#show-new-tweet").click(function() {
-    $(".new-tweet-section").toggleClass("new-tweet-section-hidden");
+    const targetSection = $(".new-tweet-section");
+
+    if (targetSection.hasClass("new-tweet-section-hidden")) {
+      targetSection.animate({ "height": 200 }, "slow", function() {
+        targetSection.toggleClass("new-tweet-section-hidden");
+      });
+    } else {
+      targetSection.animate({ "height": 0 }, "slow", function() {
+        targetSection.toggleClass("new-tweet-section-hidden");
+      });
+    }
   });
 
   $('.to-top-button').click(function() {
