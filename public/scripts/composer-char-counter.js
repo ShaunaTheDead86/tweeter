@@ -1,40 +1,21 @@
-const renderError = function(error) {
-  $('.new-tweet-header').empty();
-  $('.new-tweet-header').css('visibility', 'visible');
-  $('.new-tweet-header').slideDown(5000, function() {
-    $('.new-tweet-header').css('border', '5px solid red');
-    $('.new-tweet-header').html(error);
-  });
-  return;
-};
-
 $(document).ready(function() {
-  // set default values on load
-  $('.new-tweet-header').css('visibility', 'hidden');
-  $('#tweet_input').val('');
-  $('char_count').text('140');
+  $("textarea[class=new-tweet]").on('input', function() {
+    // get the character counter's <output> html element by navigating through the DOM
+    const charCounter = $(this).closest("form").find("output");
+    // get the remaining characters until the 140 character limit is reached
+    const charCount = 140 - $(this).val().length;
 
-  let textareaLength = $('#tweet_input').val().length;
+    // adds new lines to textarea to fit input
+    $(this).height(0); // set textarea height to 0
+    $(this).height(this.scrollHeight); // then set equal to scrollHeight
 
-  $('#tweet_input').on('input', function() {
-    $('.new-tweet').css("height", "fit-content");
+    // update the character counter with the correct remaining character count
+    $(charCounter).html(charCount);
 
-    console.log($('#tweet_input').val.length);
-
-    textareaLength = $('#tweet_input').val().length;
-    char_count = 140 - textareaLength;
-
-    $('#char_count').css('color', '#333333');
-    $('#char_count').text(`${char_count}`);
-
-    if (char_count >= 0) {
-      $('.new-tweet-header').css('visibility', 'hidden');
-    }
-
-    if (char_count < 0) {
-      $('#char_count').css('color', 'red');
-      $('tweet-form').submit(false);
-      renderError('Over character limit!');
+    if (charCount < 0) { // if the character count goes below zero
+      $(charCounter).addClass("error"); // then add the class"error" to the character counter, which makes it red
+    } else { // if the character count goes back above or equal to zero
+      $(charCounter).removeClass("error"); // then remove the "error" class and return the character counter to normal
     }
   });
 });

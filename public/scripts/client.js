@@ -22,102 +22,116 @@ const tweetData = [{
   }
 ];
 
-const createTweetElement = function(obj) {
-  return `<div class="tweets-container">
-    <div class="tweet-header">
-      <div class="profile-name-avatar">
-        <img src="${obj.user.avatars}" class="profile-image"></img>
-        <h3 class="profile-name">${obj.user.name}</h3>
+const createTweetElement = function(tweetObj) {
+  const tweet = `
+  <article class="tweet">
+    <header class="tweet-header">
+      <div class="tweet-username">
+        <img src="${tweetObj.user.avatars}" class="tweet-user-icon" />
+        ${tweetObj.user.name}
       </div>
-      <h3 class="tweeter-handle">${obj.user.handle}</h3>
+      <div class="tweet-userhandle">
+        ${tweetObj.user.handle}
+      </div>
+    </header>
+    <div class="tweet-text">
+      ${tweetObj.content.text}
     </div>
-    <div class="tweet-box">
-    <h3 class="tweet-text">
-    ${obj.content.text}
-    </h3>
-    </div>
-    <div class="tweet-footer">
-    <div class="tweet-timestamp">
-    <h5 class="render" datetime"${timeago.format(obj['created_at'])}">${timeago.format(obj['created_at'])}</h5>
-    </div>
-    <div class="tweet-icons-box">
-    <i class="fas fa-flag tweet-icons"></i>
-    <i class="fas fa-retweet tweet-icons"></i>
-    <i class="fas fa-heart tweet-icons"></i>
-    </div>
-    </div>
-    </div>`;
+    <footer class="tweet-footer">
+      <div class="tweet-timeago">
+        ${timeago.format(tweetObj['created_at'])}
+      </div>
+      <div class="tweet-icons">
+        <i class="fas fa-flag tweet-icons" />
+        <i class="fas fa-retweet tweet-icons" />
+        <i class="fas fa-heart tweet-icons" />
+      </div>
+    </footer>
+  </article>
+  `;
+
+  return tweet;
 };
 
-const renderTweets = function(arrObj) {
-  for (const obj of arrObj) {
-    let $tweet = createTweetElement(obj);
-    $('#tweets').append($tweet);
+const renderTweets = function(tweetsArr) {
+  for (const tweet of tweetsArr) {
+    $('#tweets-container').prepend(createTweetElement(tweet));
   }
 };
 
 const loadTweets = function() {
+  $.ajax('/tweets', { method: 'GET' })
+    .then(function(data) {
+      renderTweets(data);
+    });
+}
 
-  $.ajax('/tweets', { method: GET })
-    .then(function(res) {
-      renderTweets(res)
-    })
+const errorBoxToggle = function(errorBox, message) {
+  errorBox.text(""); // clear the html
+
+  if (message === undefined) { // if there's no message
+    errorBox.addClass("error-hidden") // then hide the error box
+  } else { // otherwise...
+    errorBox.text(message); // append the message
+    errorBox.removeClass("error-hidden"); // and make sure the error box visible
+  }
+}
+
+const escapeFn = function(str) {
+  let div = document.createElement("div");
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
 };
 
-$("#tweet-form").submit(function(e) {
-  e.preventDefault();
-
-  if (!(140 - $('#tweet_input').val().length < 0)) {
-    const data = decodeURIComponent($(this).serialize());
-
-    $.post('/tweets', data, function() {
-      const text = data.split('=')[1];
-
-      let newTweet = {
-        "user": {
-          "name": "Shauna",
-          "avatars": "/images/girl.png",
-          "handle": "@ShaunaTheDead"
-        },
-        "content": {
-          "text": text
-        },
-        "created_at": new Date
-      };
-
-      tweetData.unshift(newTweet);
-      $('#tweets').empty();
-      renderTweets(tweetData);
-    });
-  }
-});
-
 $(document).ready(function() {
-  let newTweetOpen = false;
-  const newTweetHeight = $('.new-tweet').css("height");
-  $('.new-tweet').css({ "height": "0", "padding": "0", "border-width": "0", "margin-bottom": "0" });
+  loadTweets();
 
-  $('.nav-text').click(function() {
-    if (newTweetOpen === false) {
-      $('.new-tweet').animate({ "height": newTweetHeight, "padding": "1rem", "border-width": "3px", "margin-bottom": "1rem" });
-      newTweetOpen = true;
+  $("#new-tweet-form").on("submit", function(event) {
+    event.preventDefault();
+
+    const form = $(this).closest("form"); // get the form element
+    const textarea = form.find("textarea"); // get the textarea element
+    const errorBox = form.find("#error-box"); // get the error message element
+    const charCounter = form.find("output"); // get the character counter
+    const charCount = Number(charCounter.val()); // get the value of the character counter
+
+    console.log();
+
+    //prepare data for Ajax calling
+    data = escapeFn(textarea.serialize());
+
+    if (textarea.val() === "" || textarea.val() === null || textarea.val() === undefined) {
+      //if text is null, show a message for empty text
+      errorBoxToggle(errorBox, "There's no text to tweet!");
+    } else if (charCount < 0) {
+      //if text exceed 140 characters, show a message for too long text
+      errorBoxToggle(errorBox, "You're over the character limit!");
     } else {
-      $('.new-tweet').animate({ "height": "0", "padding": "0", "border-width": "0px", "margin-bottom": "0" });
-      newTweetOpen = false;
+      $.post("/tweets", data)
+        .done(function() {
+          errorBoxToggle(errorBox); // clear the error box on submit
+          loadTweets();
+        });
     }
+  });
+
+  $("#show-new-tweet").click(function() {
+    $(".new-tweet-section").toggleClass("new-tweet-section-hidden");
+  });
+
+  $('.to-top-button').click(function() {
+    $(document).scrollTop(0);
   });
 });
 
 $(document).scroll(function() {
   if ($(document).scrollTop() !== 0) {
-    $('.footer').css("visibility", "visible");
+    $('.to-top-button').removeClass("to-top-button-hidden");
   } else {
-    $('.footer').css("visibility", "hidden");
+    $('.to-top-button').addClass("to-top-button-hidden");
   }
 });
 
-$('.footer').click(function() {
-  $(window).scrollTop(0);
-})
-
-renderTweets(tweetData);
+// $('.footer').click(function() {
+//   $(window).scrollTop(0);
+// })
