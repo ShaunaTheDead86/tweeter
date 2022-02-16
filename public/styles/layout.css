@@ -24,7 +24,7 @@ main {
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-top: 8.5rem;
+  margin-top: 7.5rem;
   background-color: #f4f1ec;
   background-image: URL("/images/45-degree-fabric-dark.png");
 }
@@ -38,7 +38,6 @@ section.main-container {
 section.tweets-container {
   width: 100%;
   height: fit-content;
-  margin-bottom: 1rem;
 }
 
 @media only screen and (min-width: 1024px) {
