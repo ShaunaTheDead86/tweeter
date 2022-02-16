@@ -58,7 +58,7 @@ section.tweets-container {
   height: fit-content;
 }
 
-@media only screen and (min-width: 1024px) {
+@media only screen and (min-width: 768px) {
   main {
     flex-direction: row;
   }
