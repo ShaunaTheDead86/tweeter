@@ -47,13 +47,27 @@ const loadTweets = function() {
 
 // a function that toggles the error box display from hidden to visible
 const errorBoxToggle = function(errorBox, message) {
-  errorBox.text(""); // clear the html
+  const tweetcontainer = $(".new-tweet-section");
+
+  tweetcontainer.height("fit-content"); // make sure the tweet container is set to fit-content before animating error box
 
   if (message === undefined) { // if there's no message
-    errorBox.addClass("error-hidden") // then hide the error box
+    errorBox.animate({ // animate the error box sliding up
+      "height": 0 + "rem",
+      "padding": 0 + "rem",
+      "border-width": 0 + "rem" + 0.25 + "rem" + 0 + "rem" + 0.25 + "rem"
+    }, "slow", "linear", function() { // after the animation is done
+      errorBox.addClass("error-hidden") // then hide the error box
+      errorBox.text(""); // then clear the message inside the error box
+    });
   } else { // otherwise...
     errorBox.text(message); // append the message
     errorBox.removeClass("error-hidden"); // and make sure the error box visible
+    errorBox.animate({ // animate the error box dropping down
+      "height": 2 + "rem",
+      "padding": 0.25 + "rem",
+      "border-width": 0.25 + "rem" + 0.25 + "rem" + 0.25 + "rem" + 0.25 + "rem"
+    }, "slow", "linear");
   }
 }
 
@@ -75,10 +89,10 @@ $(document).ready(function() {
   $("#new-tweet-form").on("submit", function(event) {
     event.preventDefault();
 
-    const form = $(this).closest("form"); // get the form element
-    const textarea = form.find("textarea"); // get the textarea element
-    const errorBox = form.find("#error-box"); // get the error message element
-    const charCounter = form.find("output"); // get the character counter
+    const container = $(this).closest(".new-tweet-section"); // get the form element
+    const textarea = container.find(".new-tweet-text"); // get the textarea element
+    const errorBox = container.find("#error-box"); // get the error message element
+    const charCounter = container.find("output"); // get the character counter
     const charCount = Number(charCounter.val()); // get the value of the character counter
 
     //prepare data for AJAX POST request
@@ -97,6 +111,8 @@ $(document).ready(function() {
 
           // clear the form inputs
           textarea.val("");
+          textarea.height(32 + "px"); // make sure the textbox is the right height after clearing
+          container.height("fit-content"); // resize the new tweet box after resizing the text box
           charCounter.val("140");
 
           // run the loadTweets function again to load the new tweet immediately
@@ -106,15 +122,30 @@ $(document).ready(function() {
   });
 
   // click event listener for the dropdown "create new tweet" on the navbar
-  $("#show-new-tweet").click(function() {
+  $(".show-new-tweet").click(function(event) {
+    event.preventDefault();
     const targetSection = $(".new-tweet-section"); // get container for the element we want to display
-    const insideTarget = targetSection.closest(".new-tweet-inside"); // target the contents inside the box
+    const textarea = $(".new-tweet-text"); // get the textarea element
+
+    textarea.val(""); // make sure it's cleared
+
+    console.log("click!");
 
     if (targetSection.hasClass("new-tweet-section-hidden")) { // if it's hidden
       targetSection.toggleClass("new-tweet-section-hidden"); // toggle the hidden class to make it visible
-      targetSection.animate({ "height": 201 }, "slow", "linear") // animate it opening slowly
+      targetSection.animate({
+        "height": 218 + "px",
+        "padding-top": 2 + "rem",
+        "padding-bottom": 2 + "rem"
+      }, "slow", "linear", function() { // animate it opening slowly
+        targetSection.find("#tweet-text").focus(); // focus the text area after the animation is finished
+      })
     } else { // if it's not hidden
-      targetSection.animate({ "height": 0 }, "slow", function() { // animate it slowly closing
+      targetSection.animate({
+        "height": 0 + "px",
+        "padding-top": 0 + "rem",
+        "padding-bottom": 0 + "rem"
+      }, "slow", "linear", function() { // animate it slowly closing
         targetSection.toggleClass("new-tweet-section-hidden"); // when the animation is finished, add the hidden class back to the container
       });
     }

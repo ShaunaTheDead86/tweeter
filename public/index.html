@@ -36,7 +36,9 @@
   <!-- Top nav bar (fixed) -->
   <nav class="nav-bar">
     <span class="title">tweeter</span>
-    <span class="new-tweet-button" id="show-new-tweet"><b>Write</b> a new tweet<br><i class="fa-solid fa-angles-down new-tweet-icon"></i></span>
+    <a class="show-new-tweet">
+      <span class="new-tweet-button"><b>Write</b> a new tweet<br><i class="fa-solid fa-angles-down new-tweet-icon"></i></span>
+    </a>
   </nav>
 
   <main>
@@ -47,25 +49,21 @@
 
     <!-- Page-specific (main) content here -->
     <section class="main-container">
-      <section class="new-tweet-section new-tweet-section-hidden">
-        <div class="new-tweet-inside">
-          <form class="new-tweet" id="new-tweet-form" action="/tweets" method="POST">
-            <div class="error-message error-hidden" id="error-box">
+      <div class="new-tweet-section new-tweet-section-hidden" style="padding-top: 0rem; padding-bottom: 0rem; height: 0px;">
+        <form class="new-tweet-inside" id="new-tweet-form" action="/tweets" method="POST">
+          <div class="error-message error-hidden" id="error-box">
 
-            </div>
-            <div class="new-tweet-text">
-              <textarea class="new-tweet" type="text" name="text" placeholder="What are you humming about?" id="tweet-text"></textarea>
-            </div>
-            <div class="footer">
-              <button class="tweet-submit" type="submit">Tweet</button>
-              <output class="char-counter" name="counter" class="counter" for="tweet-text">140</output>
-            </div>
-          </form>
-        </div>
-      </section>
-      <div class="tweets-container" id="tweets-container">
-        <!-- tweets will go here -->
+          </div>
+          <textarea class="new-tweet-text" type="text" name="text" placeholder="What are you humming about?" id="tweet-text"></textarea>
+          <div class="footer">
+            <button class="tweet-submit" type="submit">Tweet</button>
+            <output class="char-counter" name="counter" class="counter" for="tweet-text">140</output>
+          </div>
+        </form>
       </div>
+      <section class="tweets-container" id="tweets-container">
+        <!-- tweets will go here -->
+      </section>
       <footer>
         <div class="to-top-button to-top-button-hidden">
           <i class="fa-solid fa-angles-up to-top-icon"></i>
