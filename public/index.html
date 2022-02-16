@@ -48,18 +48,20 @@
     <!-- Page-specific (main) content here -->
     <section class="main-container">
       <section class="new-tweet-section new-tweet-section-hidden">
-        <form class="new-tweet" id="new-tweet-form" action="/tweets" method="POST">
-          <div class="error-message error-hidden" id="error-box">
+        <div class="new-tweet-inside">
+          <form class="new-tweet" id="new-tweet-form" action="/tweets" method="POST">
+            <div class="error-message error-hidden" id="error-box">
 
-          </div>
-          <div class="new-tweet-text">
-            <textarea class="new-tweet" type="text" name="text" placeholder="What are you humming about?" id="tweet-text"></textarea>
-          </div>
-          <div class="footer">
-            <button class="tweet-submit" type="submit">Tweet</button>
-            <output class="char-counter" name="counter" class="counter" for="tweet-text">140</output>
-          </div>
-        </form>
+            </div>
+            <div class="new-tweet-text">
+              <textarea class="new-tweet" type="text" name="text" placeholder="What are you humming about?" id="tweet-text"></textarea>
+            </div>
+            <div class="footer">
+              <button class="tweet-submit" type="submit">Tweet</button>
+              <output class="char-counter" name="counter" class="counter" for="tweet-text">140</output>
+            </div>
+          </form>
+        </div>
       </section>
       <section class="tweets-container" id="tweets-container">
         <!-- tweets will go here -->

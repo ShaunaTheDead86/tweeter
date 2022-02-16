@@ -3,7 +3,6 @@
  * https://css-tricks.com/international-box-sizing-awareness-day/
  * Do not modify these two selectors, please
  */
-
 html {
   font-size: 16px;
   box-sizing: border-box;
@@ -15,52 +14,52 @@ html {
   box-sizing: inherit;
 }
 
-
-/*
- * Global layout stuff
- */
-
 body {
   color: #545149;
   background-color: #f4f1ec;
   background-image: URL("/images/45-degree-fabric-dark.png");
 }
 
-
-/*
- * Additional CSS can be defined below or in other CSS files, as per instructions
- */
-
 main {
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-top: 7.5rem;
+  margin-top: 8.5rem;
   background-color: #f4f1ec;
   background-image: URL("/images/45-degree-fabric-dark.png");
 }
 
-.main-container {
+section.main-container {
   width: 90%;
   margin-left: 5%;
   margin-right: 5%;
+}
+
+section.tweets-container {
+  width: 100%;
+  height: fit-content;
+  margin-bottom: 1rem;
 }
 
 @media only screen and (min-width: 1024px) {
   main {
     flex-direction: row;
   }
-  .header {
+
+  header.header {
     flex-shrink: 3;
     min-width: min-content;
     min-height: min-content;
     padding: 1rem;
     margin: 1rem;
   }
-  .main-container {
+
+  section.main-container {
     flex-grow: 1;
     margin-top: 0rem;
     margin-left: 1rem;
     margin-right: 1rem;
   }
 }
+
+/*# sourceMappingURL=layout.css.map */

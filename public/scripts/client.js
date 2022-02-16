@@ -1,27 +1,4 @@
-const tweetData = [{
-    "user": {
-      "name": "Newton",
-      "avatars": "https://i.imgur.com/73hZDYK.png",
-      "handle": "@SirIsaac"
-    },
-    "content": {
-      "text": "If I have seen further it is by standing on the shoulders of giants"
-    },
-    "created_at": 1461116232227
-  },
-  {
-    "user": {
-      "name": "Descartes",
-      "avatars": "https://i.imgur.com/nlhLi3I.png",
-      "handle": "@rd"
-    },
-    "content": {
-      "text": "Je pense , donc je suis"
-    },
-    "created_at": 1461113959088
-  }
-];
-
+// a function creates and returns dynamtic HTML tweet boxes
 const createTweetElement = function(tweetObj) {
   const tweet = `
   <article class="tweet">
@@ -53,12 +30,14 @@ const createTweetElement = function(tweetObj) {
   return tweet;
 };
 
+// a function that iterates through an array of tweets, creates the HTML dynamically and then appends them individually to the main page
 const renderTweets = function(tweetsArr) {
   for (const tweet of tweetsArr) {
     $('#tweets-container').prepend(createTweetElement(tweet));
   }
 };
 
+// a function that retrieves an array of tweets from the database then passes them to the renderer function
 const loadTweets = function() {
   $.ajax('/tweets', { method: 'GET' })
     .then(function(data) {
@@ -66,6 +45,7 @@ const loadTweets = function() {
     });
 }
 
+// a function that toggles the error box display from hidden to visible
 const errorBoxToggle = function(errorBox, message) {
   errorBox.text(""); // clear the html
 
@@ -77,15 +57,21 @@ const errorBoxToggle = function(errorBox, message) {
   }
 }
 
+// a function that cleanses inputs for safely querying the database
 const escapeFn = function(str) {
   let div = document.createElement("div");
   div.appendChild(document.createTextNode(str));
   return div.innerHTML;
 };
 
+// when the site is loaded create dynamic content, then load event listeners onto HTML elements
 $(document).ready(function() {
+  // create dynamic content
   loadTweets();
 
+  // attach event listeners below
+
+  // event listener for new tweet submit
   $("#new-tweet-form").on("submit", function(event) {
     event.preventDefault();
 
@@ -95,9 +81,7 @@ $(document).ready(function() {
     const charCounter = form.find("output"); // get the character counter
     const charCount = Number(charCounter.val()); // get the value of the character counter
 
-    console.log();
-
-    //prepare data for Ajax calling
+    //prepare data for AJAX POST request
     data = escapeFn(textarea.serialize());
 
     if (textarea.val() === "" || textarea.val() === null || textarea.val() === undefined) {
@@ -110,38 +94,43 @@ $(document).ready(function() {
       $.post("/tweets", data)
         .done(function() {
           errorBoxToggle(errorBox); // clear the error box on submit
+
+          // clear the form inputs
+          textarea.val("");
+          charCounter.val("140");
+
+          // run the loadTweets function again to load the new tweet immediately
           loadTweets();
         });
     }
   });
 
+  // click event listener for the dropdown "create new tweet" on the navbar
   $("#show-new-tweet").click(function() {
-    const targetSection = $(".new-tweet-section");
+    const targetSection = $(".new-tweet-section"); // get container for the element we want to display
+    const insideTarget = targetSection.closest(".new-tweet-inside"); // target the contents inside the box
 
-    if (targetSection.hasClass("new-tweet-section-hidden")) {
-      targetSection.animate({ "height": 200 }, "slow", function() {
-        targetSection.toggleClass("new-tweet-section-hidden");
-      });
-    } else {
-      targetSection.animate({ "height": 0 }, "slow", function() {
-        targetSection.toggleClass("new-tweet-section-hidden");
+    if (targetSection.hasClass("new-tweet-section-hidden")) { // if it's hidden
+      targetSection.toggleClass("new-tweet-section-hidden"); // toggle the hidden class to make it visible
+      targetSection.animate({ "height": 201 }, "slow", "linear") // animate it opening slowly
+    } else { // if it's not hidden
+      targetSection.animate({ "height": 0 }, "slow", function() { // animate it slowly closing
+        targetSection.toggleClass("new-tweet-section-hidden"); // when the animation is finished, add the hidden class back to the container
       });
     }
   });
 
+  // click event listener for the "back to the top" element in the footer
   $('.to-top-button').click(function() {
-    $(document).scrollTop(0);
+    $(document).scrollTop(0); // set the scrollTop attribute to 0 which brings the user's scrollbar to the top of the page
+  });
+
+  // event listener for the user scrolling beyond the top of the page
+  $(document).scroll(function() {
+    if ($(document).scrollTop() !== 0) { // if the user is not at the top of the page
+      $('.to-top-button').removeClass("to-top-button-hidden"); // remove the hidden class to reveal the button
+    } else { // if the user returns to the top of the page
+      $('.to-top-button').addClass("to-top-button-hidden"); // then hide the button by adding the hidden class
+    }
   });
 });
-
-$(document).scroll(function() {
-  if ($(document).scrollTop() !== 0) {
-    $('.to-top-button').removeClass("to-top-button-hidden");
-  } else {
-    $('.to-top-button').addClass("to-top-button-hidden");
-  }
-});
-
-// $('.footer').click(function() {
-//   $(window).scrollTop(0);
-// })
